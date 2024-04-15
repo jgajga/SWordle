@@ -4,6 +4,8 @@
  */
 package com.jga.swordle;
 
+import java.io.IOException;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +23,21 @@ public class Main {
         logger.info("Info log message");
         logger.warn("Warn log message");
         logger.error("Error log message");
+        try{
+        String content = Utils.readURL("https://raw.githubusercontent.com/eymenefealtun/all-words-in-all-languages/main/Japanese/Japanese.txt");
+            logger.info(content);
+            List<String> words = Utils.splitByComma(content);
+            for (String s: words){
+                logger.info(s);    
+            }
+        } catch (IOException e) {
+            
+        }
         
+
+        
+
+
 
     }     
 }
