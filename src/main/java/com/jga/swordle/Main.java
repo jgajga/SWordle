@@ -17,24 +17,6 @@ public class Main {
     private static Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        SWordle sw = new SWordle(5, "es");
-        try{
-        String content = Utils.readURL("https://raw.githubusercontent.com/eymenefealtun/all-words-in-all-languages/main/Basque/Basque.txt");
-            logger.info(content);
-            List<String> words = Utils.splitByComma(content);
-            /*
-            for (String s: words){
-                logger.info(s);    
-            }
-            */
-        } catch (IOException e) {
-            
-        }
-        
-
-        
-
-
-
+        SWordle sw = new SWordle(5, "Basque");
     }     
 }
