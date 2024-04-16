@@ -18,18 +18,15 @@ public class Main {
 
     public static void main(String[] args) {
         SWordle sw = new SWordle(5, "es");
-        logger.trace("Trace log message");
-        logger.debug("Debug log message");
-        logger.info("Info log message");
-        logger.warn("Warn log message");
-        logger.error("Error log message");
         try{
-        String content = Utils.readURL("https://raw.githubusercontent.com/eymenefealtun/all-words-in-all-languages/main/Japanese/Japanese.txt");
+        String content = Utils.readURL("https://raw.githubusercontent.com/eymenefealtun/all-words-in-all-languages/main/Basque/Basque.txt");
             logger.info(content);
             List<String> words = Utils.splitByComma(content);
+            /*
             for (String s: words){
                 logger.info(s);    
             }
+            */
         } catch (IOException e) {
             
         }
