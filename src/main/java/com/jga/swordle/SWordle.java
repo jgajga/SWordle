@@ -5,6 +5,9 @@
 package com.jga.swordle;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,48 +19,63 @@ public class SWordle {
     int size;
     String language;
     SQLiteDB db;
+    List<String> words;
 
     public SWordle(int size, String language) {
         this.size = size;
         this.language = language;
         db = new SQLiteDB("jdbc:sqlite::memory:");
         this.createDB();
-        this.loadDB();
+
         String content;
-        logger.info(stringURL(BASE, language));
+        logger.info(strURL(BASE, language));
         try{
-            content = Utils.readURL(stringURL(BASE, language));
+            content = Utils.readURL(strURL(BASE, language));
         }catch (IOException e) {
             content = "Error";
         }        
         logger.info(content);
         
+        this.words = Utils.filterValidWords(Utils.splitByComma(content),this.size);
+        
+        this.loadDB();
+        
     }
     
     private void createDB(){
 
-        logger.info(stringCreateTableWords());
-        db.executeUpdate(stringCreateTableWords());
-        
-        logger.info(stringCreateTableWordsN());
-        db.executeUpdate(stringCreateTableWordsN());
+        logger.info(strCreateTableWords());
+        db.executeUpdate(strCreateTableWords());
         
 
+        
     }
     
     private void loadDB(){
+        logger.info("loadDB");
+        for (String w: words){
+            db.executeUpdate(strInsertWord(w));
+            logger.info("loading: " + w + "(" + strInsertWord(w) +")");
+        }    
         
+        
+        ResultSet rs = db.executeQuery("SELECT COUNT(*) FROM Words");
+        Integer count = 0;
+        try {
+        while (rs.next()) {
+            count = rs.getInt(1);
+        }
+        rs.close();
+        logger.info("Loaded rows: " + count);
+        } catch(SQLException e){
+        }
     }
     
-    private String stringCreateTableWords(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("CREATE TABLE Words ( Word TEXT(100))");
-        return sb.toString();
-    }
+
     
-    private String stringCreateTableWordsN(){
+    private String strCreateTableWords(){
         StringBuilder sb = new StringBuilder();
-        sb.append("CREATE TABLE WordsN ( Word TEXT(100), ");
+        sb.append("CREATE TABLE Words ( Word TEXT(100), ");
         
         for (int i=1; i<this.size; i++){
             sb.append("Letter");
@@ -70,15 +88,24 @@ public class SWordle {
         return sb.toString();
     }
     
-    private String stringInsertWord(String word){
+    private String strInsertWord(String word){
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO Words VALUES (\"");
         sb.append(word);
-        sb.append("\")");
+        sb.append("\", ");
+        for (int i=1; i<this.size; i++){
+            sb.append("\"");
+            sb.append(String.valueOf(word.charAt(i-1)));
+            sb.append("\", ");
+        }
+        sb.append("\"");
+        sb.append(String.valueOf(word.charAt(this.size-1)));
+        sb.append("\")");       
+        
         return sb.toString();
     }
     
-    private String stringURL(String base, String language){
+    private String strURL(String base, String language){
         StringBuilder sb = new StringBuilder();
         sb.append(base);
         sb.append("/");
@@ -88,6 +115,8 @@ public class SWordle {
         sb.append(".txt");
         return sb.toString();
     }
+    
+    
     
     
 }

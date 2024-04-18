@@ -36,4 +36,26 @@ public class Utils {
         result.add(input.substring(startIndex));
         return result;
     }
+    
+    public static List<String> filterValidWords(List<String> words, int size){
+        List<String> result = new ArrayList<>();
+        for (String w: words)
+        {
+            if (w.length() == size){
+                result.add(w);
+            }
+        }
+        return result;
+            
+    }
 }
+
+
+
+
+
+
+
+
+
+
