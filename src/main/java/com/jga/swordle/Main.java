@@ -17,6 +17,6 @@ public class Main {
     private static Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        SWordle sw = new SWordle(5, "Basque");
+        SWordle sw = new SWordle(5, "Spanish");
     }     
 }

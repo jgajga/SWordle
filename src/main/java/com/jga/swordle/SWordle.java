@@ -14,12 +14,12 @@ import org.slf4j.LoggerFactory;
 
 public class SWordle {
     
-    private static final String  BASE = "https://raw.githubusercontent.com/eymenefealtun/all-words-in-all-languages/main";
+    private final String  BASE = "https://raw.githubusercontent.com/eymenefealtun/all-words-in-all-languages/main";
     private static final Logger logger = LoggerFactory.getLogger(SWordle.class);
-    int size;
-    String language;
-    SQLiteDB db;
-    List<String> words;
+    private int size;
+    private String language;
+    private SQLiteDB db;
+    private final List<String> words;
 
     public SWordle(int size, String language) {
         this.size = size;
@@ -28,9 +28,9 @@ public class SWordle {
         this.createDB();
 
         String content;
-        logger.info(strURL(BASE, language));
+        logger.info(strURL());
         try{
-            content = Utils.readURL(strURL(BASE, language));
+            content = Utils.readURL(strURL());
         }catch (IOException e) {
             content = "Error";
         }        
@@ -39,6 +39,8 @@ public class SWordle {
         this.words = Utils.filterValidWords(Utils.splitByComma(content),this.size);
         
         this.loadDB();
+        
+        logger.info(this.strEvaluationQuery());
         
     }
     
@@ -55,7 +57,8 @@ public class SWordle {
         logger.info("loadDB");
         for (String w: words){
             db.executeUpdate(strInsertWord(w));
-            logger.info("loading: " + w + "(" + strInsertWord(w) +")");
+            //logger.info("loading: " + w + "(" + strInsertWord(w) +")");
+            System.out.println(strInsertWord(w) + ";");
         }    
         
         
@@ -105,15 +108,69 @@ public class SWordle {
         return sb.toString();
     }
     
-    private String strURL(String base, String language){
+    private String strURL(){
         StringBuilder sb = new StringBuilder();
-        sb.append(base);
+        sb.append(this.BASE);
         sb.append("/");
-        sb.append(language);
+        sb.append(this.language);
         sb.append("/"); 
-        sb.append(language);
+        sb.append(this.language);
         sb.append(".txt");
         return sb.toString();
+    }
+    
+    private String strEvaluationQuery()
+    {
+        StringBuilder sb = new StringBuilder(); 
+        sb.append("SELECT Word, ");
+        for (int i=1; i<=this.size; i++){
+            sb.append("Frequency");
+            sb.append(i);
+            sb.append(", ");
+        }
+        for (int i=1; i<this.size; i++){
+            sb.append("Frequency");
+            sb.append(i);
+            sb.append(" * ");
+        }        
+        sb.append("Frequency");
+        sb.append(this.size);
+        
+        sb.append(" FROM Words W");
+        
+        for (int i=1; i<=this.size; i++){
+            sb.append(" LEFT JOIN ");
+            sb.append("(SELECT Letter");
+            sb.append(i);
+            sb.append(", COUNT(Letter");
+            sb.append(i);
+            sb.append(") AS Frequency");
+            sb.append(i);
+            sb.append(" FROM Words GROUP BY Letter");
+            sb.append(i);
+            sb.append(") AS T");
+            sb.append(i);
+            sb.append(" ON W.Letter");
+            sb.append(i);
+            sb.append(" = T");
+            sb.append(i);
+            sb.append(".Letter");
+            sb.append(i);           
+        }  
+        //Where conditions here
+        sb.append(" WHERE 1=1");
+        sb.append(" ORDER BY ");
+        
+        for (int i=1; i<this.size; i++){
+            sb.append("Frequency");
+            sb.append(i);
+            sb.append(" * ");
+        }        
+        sb.append("Frequency");
+        sb.append(this.size);
+        sb.append(" DESC");
+        return sb.toString();
+        
     }
     
     
