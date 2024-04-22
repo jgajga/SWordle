@@ -7,6 +7,7 @@ package com.jga.swordle;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,9 @@ public class SWordle {
     private String language;
     private SQLiteDB db;
     private final List<String> words;
+    
+    private String selectedWord;
+    private List<String> conditions;
 
     public SWordle(int size, String language) {
         this.size = size;
@@ -40,14 +44,14 @@ public class SWordle {
         
         this.loadDB();
         
+        this.conditions = new ArrayList<String>();
+        
     }
     
     private void createDB(){
 
         logger.info(strCreateTableWords());
         db.executeUpdate(strCreateTableWords());
-        
-
         
     }
     
@@ -72,23 +76,60 @@ public class SWordle {
         }
     }
     
-    public String attempt() throws WordleException{
+    public String getAttempt() throws WordleException{
         ResultSet rs = db.executeQuery(this.strEvaluationQuery());
-        String selectedWord = "";
+        String word = "";
         try {
             if (rs.next()) {
-                selectedWord = rs.getString(1);
+                word = rs.getString(1);
             }
             else
             {
                 throw new WordleException("EVALUATION_ERROR", "The evaluation function did not suggest any words");
             }
         rs.close();
-        logger.info("SelectedWord: " + selectedWord);
+        logger.info("SelectedWord: " + word);
         } catch(SQLException e){
         }
-        return selectedWord;
+        this.selectedWord = word;
+        return word;
         
+    }
+    
+    // X: Letter is not in the word
+    // O: Letter in correct position
+    // ?: Letter in word but at wrong position
+    // #: Incorrect word (not found in dictionary)
+    public void setAttempResult(String s){
+        if (s.equals("#"))
+        {
+            
+        }
+        else
+        {
+            for (int i=1; i<=this.size; i++)
+            {
+                switch(s.substring(i-1, i-1)){
+                    case "O":
+                        conditions.add(strCorrectPositionCondition(i,this.selectedWord));
+                        break;
+                    case "?":
+                        break;
+                    default:
+                        
+                }
+            }
+        }
+        
+    }
+    
+    private String strCorrectPositionCondition(int index, String word){
+        StringBuilder sb = new StringBuilder();    
+        sb.append("Letter");
+        sb.append(index);
+        sb.append(" = \"");
+        sb.append(word.substring(index-1, index-1));  
+        return sb.toString();
     }
 
     

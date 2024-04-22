@@ -19,7 +19,7 @@ public class Main {
     public static void main(String[] args) {
         SWordle sw = new SWordle(5, "Spanish");
         try{
-        logger.info("Evaluate: " + sw.attempt());
+        logger.info("Evaluate: " + sw.getAttempt());
         }
         catch(WordleException we){}
     }     
