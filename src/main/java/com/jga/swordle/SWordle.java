@@ -40,8 +40,6 @@ public class SWordle {
         
         this.loadDB();
         
-        logger.info(this.strEvaluationQuery());
-        
     }
     
     private void createDB(){
@@ -74,6 +72,24 @@ public class SWordle {
         }
     }
     
+    public String attempt() throws WordleException{
+        ResultSet rs = db.executeQuery(this.strEvaluationQuery());
+        String selectedWord = "";
+        try {
+            if (rs.next()) {
+                selectedWord = rs.getString(1);
+            }
+            else
+            {
+                throw new WordleException("EVALUATION_ERROR", "The evaluation function did not suggest any words");
+            }
+        rs.close();
+        logger.info("SelectedWord: " + selectedWord);
+        } catch(SQLException e){
+        }
+        return selectedWord;
+        
+    }
 
     
     private String strCreateTableWords(){
@@ -169,6 +185,8 @@ public class SWordle {
         sb.append("Frequency");
         sb.append(this.size);
         sb.append(" DESC");
+        
+        logger.info("strEvaluationQuery():" + sb.toString());
         return sb.toString();
         
     }
