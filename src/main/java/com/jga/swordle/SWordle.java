@@ -122,6 +122,11 @@ public class SWordle {
         
     }
     
+    public void reset(){
+        selectedWord = "";
+        conditions  = new ArrayList<String>();
+    }
+    
     private String strNotInDictionary(String word){
         StringBuilder sb = new StringBuilder();    
         sb.append("W.Word <> \"");

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.jga.forms.Frm;
 
 /**
  *
@@ -18,6 +19,7 @@ public class Main {
     private static Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
+        /*
         SWordle sw = new SWordle(5, "Spanish");
         String resp = "";
         while (!resp.equals("====="))
@@ -31,5 +33,9 @@ public class Main {
             resp = s.next();
             sw.setGuessResult(resp);
         }
+        sw.reset();
+*/
+        Frm frm = new Frm(); 
+        frm.setVisible(true);
     }     
 }
