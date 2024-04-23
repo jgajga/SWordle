@@ -23,13 +23,13 @@ public class Main {
         while (!resp.equals("====="))
         {
             try{
-            logger.info("Evaluate: " + sw.getAttempt());
+            logger.info("Evaluate: " + sw.getGuess());
             }
             catch(WordleException we){}
             Scanner s = new Scanner(System.in);
             System.out.println("Resp:");
             resp = s.next();
-            sw.setAttemptResult(resp);
+            sw.setGuessResult(resp);
         }
     }     
 }

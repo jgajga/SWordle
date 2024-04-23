@@ -76,7 +76,7 @@ public class SWordle {
         }
     }
     
-    public String getAttempt() throws WordleException{
+    public String getGuess() throws WordleException{
         ResultSet rs = db.executeQuery(this.strEvaluationQuery());
         String word = "";
         try {
@@ -100,7 +100,7 @@ public class SWordle {
     // O: Letter in correct position
     // ?: Letter in word but at wrong position
     // #: Incorrect word (not found in dictionary)
-    public void setAttemptResult(String s){
+    public void setGuessResult(String s){
         if (s.equals("#"))
         {
             conditions.add(strNotInDictionary(this.selectedWord));
