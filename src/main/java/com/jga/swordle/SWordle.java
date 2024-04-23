@@ -100,37 +100,119 @@ public class SWordle {
     // O: Letter in correct position
     // ?: Letter in word but at wrong position
     // #: Incorrect word (not found in dictionary)
-    public void setAttempResult(String s){
+    public void setAttemptResult(String s){
         if (s.equals("#"))
         {
-            
+            conditions.add(strNotInDictionary(this.selectedWord));
         }
         else
         {
             for (int i=1; i<=this.size; i++)
             {
-                switch(s.substring(i-1, i-1)){
-                    case "O":
-                        conditions.add(strCorrectPositionCondition(i,this.selectedWord));
-                        break;
-                    case "?":
-                        break;
-                    default:
-                        
+                switch(s.substring(i-1, i)){
+                    case "=" -> conditions.add(strCorrectPositionCondition(i,this.selectedWord));
+                    case "?" -> conditions.add(strIncorrectPositionCondition(i,this.selectedWord));
+                    default -> {
+                        List<String> l = lettersInGreenOrYellow(this.selectedWord, s);
+                        conditions.add(strNotFoundCondition(i, this.selectedWord, l));
+                    }
                 }
             }
         }
         
     }
     
-    private String strCorrectPositionCondition(int index, String word){
+    private String strNotInDictionary(String word){
         StringBuilder sb = new StringBuilder();    
-        sb.append("Letter");
-        sb.append(index);
-        sb.append(" = \"");
-        sb.append(word.substring(index-1, index-1));  
+        sb.append("W.Word <> \"");
+        sb.append(word);
+        sb.append("\"");
         return sb.toString();
     }
+    
+    private String strCorrectPositionCondition(int index, String word){
+        StringBuilder sb = new StringBuilder();    
+        sb.append("W.Letter");
+        sb.append(index);
+        sb.append(" = \"");
+        sb.append(word.substring(index-1, index));  
+        sb.append("\"");
+        return sb.toString();
+    }
+    
+    private String strIncorrectPositionCondition(int index, String word){
+        StringBuilder sb = new StringBuilder();    
+        sb.append("W.Letter");
+        sb.append(index);
+        sb.append(" <> \"");
+        sb.append(word.substring(index-1, index));  
+        sb.append("\"");
+        sb.append(" AND ("); 
+        
+        String[] strOrs = new String[this.size-1];
+        int count=0;
+        for (int i=1; i<=this.size; i++){
+            if (i!=index){
+                StringBuilder sb2 = new StringBuilder(); 
+                sb2.append("W.Letter");
+                sb2.append(i);
+                sb2.append(" = \"");
+                sb2.append(word.substring(index-1, index));  
+                sb2.append("\"");   
+                strOrs[count] = sb2.toString();
+                count++;
+            }  
+        }
+        sb.append(String.join(" OR ", strOrs));
+        sb.append(")");
+
+        return sb.toString();
+    }
+        
+        
+    private List<String> lettersInGreenOrYellow(String selected, String answer){
+        List<String> lettersIn = new ArrayList<>();
+        for (int i=0; i<this.size; i++){
+            if (String.valueOf(answer.charAt(i)).equals("=") || String.valueOf(answer.charAt(i)).equals("?")){
+                lettersIn.add(String.valueOf(selected.charAt(i)));
+            }
+        }
+        return lettersIn;
+    }
+
+    //
+    private String strNotFoundCondition(int index, String word, List<String> lettersInGreenOrYellow){
+        StringBuilder sb = new StringBuilder();    
+
+        if (lettersInGreenOrYellow.contains(word.substring(index-1, index))){
+            sb.append("W.Letter");    
+            sb.append(index); 
+            sb.append(" <> \"");  
+            sb.append(word.substring(index-1, index));  
+            sb.append("\"");  
+        }
+        else
+        {
+            String[] strAnds = new String[this.size];  
+            for (int j=0; j<this.size; j++){
+                StringBuilder sb2 = new StringBuilder(); 
+                sb2.append("W.Letter");    
+                sb2.append(j+1); 
+                sb2.append(" <> \"");  
+                sb2.append(word.substring(index-1, index));  
+                sb2.append("\"");   
+                strAnds[j] = sb2.toString();
+            }
+            sb.append("(");
+            sb.append(String.join(" AND ", strAnds));
+            sb.append(")");
+        }
+        return sb.toString();
+        
+    }
+        
+        
+
 
     
     private String strCreateTableWords(){
@@ -216,6 +298,11 @@ public class SWordle {
         }  
         //Where conditions here
         sb.append(" WHERE 1=1");
+        for (String s : this.conditions){
+            sb.append(" AND ");    
+            sb.append(s); 
+        }
+        logger.info("conditions: " + this.conditions);
         sb.append(" ORDER BY ");
         
         for (int i=1; i<this.size; i++){

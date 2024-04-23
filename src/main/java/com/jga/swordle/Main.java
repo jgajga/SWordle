@@ -6,6 +6,7 @@ package com.jga.swordle;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,9 +19,17 @@ public class Main {
 
     public static void main(String[] args) {
         SWordle sw = new SWordle(5, "Spanish");
-        try{
-        logger.info("Evaluate: " + sw.getAttempt());
+        String resp = "";
+        while (!resp.equals("====="))
+        {
+            try{
+            logger.info("Evaluate: " + sw.getAttempt());
+            }
+            catch(WordleException we){}
+            Scanner s = new Scanner(System.in);
+            System.out.println("Resp:");
+            resp = s.next();
+            sw.setAttemptResult(resp);
         }
-        catch(WordleException we){}
     }     
 }
