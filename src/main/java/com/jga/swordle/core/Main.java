@@ -37,5 +37,6 @@ public class Main {
 */
         Frm frm = new Frm(); 
         frm.setVisible(true);
+        frm.setSize(600, 600);
     }     
 }

@@ -7,6 +7,8 @@ package com.jga.swordle.gui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -17,14 +19,14 @@ import javax.swing.border.Border;
  *
  * @author 280148
  */
-public class WordPanel extends javax.swing.JPanel {
+public class WordPanel extends javax.swing.JPanel /*implements ActionListener*/{
 
     private int BOX_WIDTH = 50;
-    private int BOX_HEIGHT = 100;
+    private int BOX_HEIGHT = 50;
     private int WIDTH_SEPARATOR = 5;
-    private int HEIGHT_SEPARATOR = 10;    
+    private int HEIGHT_SEPARATOR = 5;    
     
-    private List<JButton> llb;
+    private List<LetterBox> llb;
     private JButton btnCheck;
     private JButton btnNotFound;
     /**
@@ -32,8 +34,8 @@ public class WordPanel extends javax.swing.JPanel {
      */
     public WordPanel(int size) {
         initComponents();
-        this.setBorder(BorderFactory.createLineBorder(Color.black));
-        llb = new ArrayList<JButton>();
+        //this.setBorder(BorderFactory.createLineBorder(Color.black));
+        llb = new ArrayList<LetterBox>();
         for (int i=0; i<size; i++)
         {
             LetterBox lbox = new LetterBox();
@@ -48,7 +50,6 @@ public class WordPanel extends javax.swing.JPanel {
         btnCheck.setText("O");
         btnCheck.setFont(new Font("Dialog", Font.PLAIN, 40));
         btnCheck.setBounds(WIDTH_SEPARATOR + (size+1)*(BOX_WIDTH + WIDTH_SEPARATOR), HEIGHT_SEPARATOR, BOX_WIDTH, BOX_HEIGHT);
-        llb.add(btnCheck);
         this.add(btnCheck);
         btnCheck.setVisible(true);
         
@@ -58,10 +59,22 @@ public class WordPanel extends javax.swing.JPanel {
         btnNotFound.setText("X");
         btnNotFound.setFont(new Font("Dialog", Font.PLAIN, 40));
         btnNotFound.setBounds(WIDTH_SEPARATOR + (size+2)*(BOX_WIDTH + WIDTH_SEPARATOR), HEIGHT_SEPARATOR, BOX_WIDTH, BOX_HEIGHT);
-        llb.add(btnNotFound);
         this.add(btnNotFound);
         btnNotFound.setVisible(true);
+        
+        
+        btnCheck.addActionListener((ActionEvent e) -> {
+            System.exit(0);
+        });
+        
+        btnNotFound.addActionListener((ActionEvent e) -> {
+            System.exit(0);
+        });
     }
+    
+
+
+
     
     @Override
     public void setEnabled(boolean isEnabled){
@@ -69,6 +82,8 @@ public class WordPanel extends javax.swing.JPanel {
             lb.setEnabled(isEnabled);
         }
         super.setEnabled(isEnabled);
+        btnCheck.setEnabled(isEnabled);
+        btnNotFound.setEnabled(isEnabled);
     }
 
     /**

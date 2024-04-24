@@ -4,6 +4,8 @@
  */
 package com.jga.swordle.gui;
 
+import com.jga.swordle.core.SWordle;
+
 /**
  *
  * @author 280148
@@ -32,17 +34,21 @@ public class Frm extends javax.swing.JFrame {
         wpanel.setEnabled(false);
         wpanel.setEnabled(true);
         */
-        
-        wordlePanel = new WordlePanel(4, 3);
-        wordlePanel.setBounds(10, 200, 500, 500);
+        SWordle sw = new SWordle(5, 6, "Spanish");
+        wordlePanel = new WordlePanel(sw);
+        //wordlePanel.setBounds(0, 0, 500, 600);
         this.add(wordlePanel);
         wordlePanel.setVisible(true);
+        this.setSize(600, 600);
         
+
         
+        /*
         wpanel = new WordPanel(3);
         wpanel.setBounds(0, 0, 600, 150);
         wpanel.setVisible(true);
         this.add(wpanel);
+        */
         
     }
 

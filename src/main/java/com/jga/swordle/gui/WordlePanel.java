@@ -4,10 +4,16 @@
  */
 package com.jga.swordle.gui;
 
+import com.jga.swordle.core.SWordle;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 
 /**
  *
@@ -16,28 +22,72 @@ import javax.swing.BorderFactory;
 public class WordlePanel extends javax.swing.JPanel {
 
     private int BOX_WIDTH = 50;
-    private int BOX_HEIGHT = 100;
+    private int BOX_HEIGHT = 50;
     private int WIDTH_SEPARATOR = 5;
-    private int HEIGHT_SEPARATOR = 10;    
+    private int HEIGHT_SEPARATOR = 5;    
     
     private List<WordPanel> lwp;
-    /**
-     * Creates new form WordlePanel
-     */
-    public WordlePanel(int size, int turns) {
+    private JButton btnStart;
+    private SWordle sw;
+
+    public SWordle getSWordle() {
+        return sw;
+    }
+
+    public void setSWordle(SWordle sw) {
+        this.sw = sw;
+    }
+
+    public WordlePanel(SWordle sw) {
+
         initComponents();
-        this.setBorder(BorderFactory.createLineBorder(Color.black));
-        lwp = new ArrayList<WordPanel>();
+        int size = sw.getSize();
+        int turns = sw.getTurns();
+        //this.setBorder(BorderFactory.createLineBorder(Color.black));
+        this.setBounds(10, 10, 500, 600);
+        lwp = new ArrayList<>();
         for (int i=0; i<turns; i++)
         {
             WordPanel wp = new WordPanel(size);
             wp.setVisible(true);
-            wp.setBounds(WIDTH_SEPARATOR, (i+1)*HEIGHT_SEPARATOR + i*(BOX_HEIGHT + HEIGHT_SEPARATOR) ,  size * (BOX_WIDTH + WIDTH_SEPARATOR) + WIDTH_SEPARATOR, BOX_HEIGHT + 2*HEIGHT_SEPARATOR);
+            wp.setBounds(WIDTH_SEPARATOR, (i+1)*HEIGHT_SEPARATOR + i*(BOX_HEIGHT + HEIGHT_SEPARATOR) ,  (size+3) * (BOX_WIDTH + WIDTH_SEPARATOR) + WIDTH_SEPARATOR, BOX_HEIGHT + 2*HEIGHT_SEPARATOR);
             lwp.add(wp);
             this.add(wp);
         }        
         
+        btnStart = new JButton();
+        //btnStart.setMargin(new Insets(0, 0, 0, 0));
+        btnStart.setFont(new Font("Dialog", Font.PLAIN, 20));
+        btnStart.setText("Start");
+        btnStart.setBounds(WIDTH_SEPARATOR, (turns+1)*HEIGHT_SEPARATOR + (turns)*(BOX_HEIGHT + HEIGHT_SEPARATOR), 100, 40);
+        btnStart.setVisible(true);
+        this.add(btnStart);
+        
+        //Disable all WordPanels
+        for (WordPanel wp : lwp)
+        {
+            wp.setEnabled(false);
+        }
+        
+        btnStart.addActionListener((ActionEvent e) -> {
+          if ("Start".equals(btnStart.getText())){
+            btnStart.setText("Reset"); 
+            lwp.get(0).setEnabled(true);
+          }
+          else
+          {
+            btnStart.setText("Start"); 
+            for (WordPanel wp : lwp){
+                wp.setEnabled(false);
+                sw.reset();
+                        
+            }
+          }
+        });
+        
     }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.

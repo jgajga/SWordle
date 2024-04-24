@@ -18,15 +18,29 @@ public class SWordle {
     private final String  BASE = "https://raw.githubusercontent.com/eymenefealtun/all-words-in-all-languages/main";
     private static final Logger logger = LoggerFactory.getLogger(SWordle.class);
     private int size;
+    private int turns;
     private String language;
     private SQLiteDB db;
     private final List<String> words;
     
     private String selectedWord;
     private List<String> conditions;
+    
+    public int getSize() {
+        return size;
+    }
 
-    public SWordle(int size, String language) {
+    public int getTurns() {
+        return turns;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public SWordle(int size, int turns, String language) {
         this.size = size;
+        this.turns = turns;
         this.language = language;
         db = new SQLiteDB("jdbc:sqlite::memory:");
         this.createDB();
