@@ -19,7 +19,7 @@ public class LetterBox extends JButton implements ActionListener{
 
     
     public LetterBox() {
-         this.setBackground(Color.GRAY);
+         this.setBackground(Color.WHITE);
          addActionListener(this);
          setMargin(new Insets(0, 0, 0, 0));
          this.setText("윤");
@@ -36,7 +36,7 @@ public class LetterBox extends JButton implements ActionListener{
         else if (this.getBackground() == Color.GREEN){
             this.setBackground(Color.GRAY);    
         }
-        else if (this.getBackground() == Color.GRAY){
+        else if (this.getBackground() == Color.GRAY || this.getBackground() == Color.WHITE){
             this.setBackground(Color.YELLOW);    
         }        
     }
