@@ -12,7 +12,7 @@
 
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <exec.mainClass>com.jga.swordle.Main</exec.mainClass>
+        <exec.mainClass>com.jga.swordle.core.Main</exec.mainClass>
     </properties>
     
     <dependencies>
@@ -60,7 +60,7 @@
           <manifest>
             <addClasspath>true</addClasspath>
             <classpathPrefix>lib/</classpathPrefix>
-            <mainClass>com.jga.swordle.Main</mainClass>
+            <mainClass>com.jga.swordle.core.Main</mainClass>
           </manifest>
         </archive>
       </configuration>

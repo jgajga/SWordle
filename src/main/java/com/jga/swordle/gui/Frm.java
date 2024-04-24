@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.jga.forms;
+package com.jga.swordle.gui;
 
 /**
  *
@@ -11,16 +11,32 @@ package com.jga.forms;
 public class Frm extends javax.swing.JFrame {
 
     LetterBox lbox;
+    WordPanel wpanel;
+    WordlePanel wordlePanel;
     /**
      * Creates new form frm
      */
     public Frm() {
         initComponents();
+        /*
         lbox = new LetterBox();
         lbox.setVisible(true);
-        lbox.setBounds(10, 10, 100, 100);
+        lbox.setBounds(10, 10, 50, 50);
         this.setTitle("TITULO");
         this.add(lbox);
+        
+        wpanel = new WordPanel(7);
+        wpanel.setBounds(10, 120, 400, 70);
+        wpanel.setVisible(true);
+        this.add(wpanel);
+        wpanel.setEnabled(false);
+        wpanel.setEnabled(true);
+        */
+        
+        wordlePanel = new WordlePanel(7, 6);
+        wordlePanel.setBounds(10, 10, 60 * 6, 60 * 7);
+        this.add(wordlePanel);
+        wordlePanel.setVisible(true);
     }
 
     /**

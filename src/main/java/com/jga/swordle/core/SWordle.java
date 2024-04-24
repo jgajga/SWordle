@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.jga.swordle;
+package com.jga.swordle.core;
 
 import java.io.IOException;
 import java.sql.ResultSet;

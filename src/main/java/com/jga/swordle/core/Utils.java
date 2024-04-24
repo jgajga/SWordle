@@ -1,5 +1,5 @@
 
-package com.jga.swordle;
+package com.jga.swordle.core;
 
 import java.io.BufferedReader;
 import java.io.IOException;
