@@ -33,10 +33,17 @@ public class Frm extends javax.swing.JFrame {
         wpanel.setEnabled(true);
         */
         
-        wordlePanel = new WordlePanel(7, 6);
-        wordlePanel.setBounds(10, 10, 60 * 6, 60 * 7);
+        wordlePanel = new WordlePanel(4, 3);
+        wordlePanel.setBounds(10, 200, 500, 500);
         this.add(wordlePanel);
         wordlePanel.setVisible(true);
+        
+        
+        wpanel = new WordPanel(3);
+        wpanel.setBounds(0, 0, 600, 150);
+        wpanel.setVisible(true);
+        this.add(wpanel);
+        
     }
 
     /**

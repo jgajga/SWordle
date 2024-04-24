@@ -15,6 +15,11 @@ import javax.swing.BorderFactory;
  */
 public class WordlePanel extends javax.swing.JPanel {
 
+    private int BOX_WIDTH = 50;
+    private int BOX_HEIGHT = 100;
+    private int WIDTH_SEPARATOR = 5;
+    private int HEIGHT_SEPARATOR = 10;    
+    
     private List<WordPanel> lwp;
     /**
      * Creates new form WordlePanel
@@ -27,10 +32,11 @@ public class WordlePanel extends javax.swing.JPanel {
         {
             WordPanel wp = new WordPanel(size);
             wp.setVisible(true);
-            wp.setBounds(10, 10 + (i*55), 50 * size, 70);
+            wp.setBounds(WIDTH_SEPARATOR, (i+1)*HEIGHT_SEPARATOR + i*(BOX_HEIGHT + HEIGHT_SEPARATOR) ,  size * (BOX_WIDTH + WIDTH_SEPARATOR) + WIDTH_SEPARATOR, BOX_HEIGHT + 2*HEIGHT_SEPARATOR);
             lwp.add(wp);
             this.add(wp);
         }        
+        
     }
 
     /**
