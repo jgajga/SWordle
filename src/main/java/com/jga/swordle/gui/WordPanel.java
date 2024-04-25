@@ -5,6 +5,7 @@
 package com.jga.swordle.gui;
 
 import com.jga.swordle.core.SWordle;
+import com.jga.swordle.core.WordleException;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Insets;
@@ -12,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.border.Border;
@@ -32,14 +35,15 @@ public class WordPanel extends javax.swing.JPanel /*implements ActionListener*/{
     private JButton btnNotFound;
     private SWordle sw;
     private String word;
+    private WordlePanel parent;
     
     /**
      * Creates new form WordPanel
      */
-    public WordPanel(SWordle sw) {
+    public WordPanel(WordlePanel parent) {
         initComponents();
-        this.sw = sw;
-        int size = sw.getSize();
+        this.sw = parent.getSWordle();
+        int size = this.sw.getSize();
         //this.setBorder(BorderFactory.createLineBorder(Color.black));
         llb = new ArrayList<LetterBox>();
         for (int i=0; i<size; i++)
@@ -70,11 +74,35 @@ public class WordPanel extends javax.swing.JPanel /*implements ActionListener*/{
         
         
         btnCheck.addActionListener((ActionEvent e) -> {
-            System.exit(0);
+            StringBuilder sb = new StringBuilder(); 
+            for (LetterBox lb : llb){
+                if (lb.getBackground() == Color.GREEN)
+                {
+                    sb.append("=");
+                }
+                else if (lb.getBackground() == Color.YELLOW)
+                {
+                    sb.append("?");
+                }            
+                else if (lb.getBackground() == Color.GRAY)
+                {
+                    sb.append("x");
+                }                
+            }
+            sw.setGuessResult(sb.toString());
+            parent.newTurn();
+            
         });
         
         btnNotFound.addActionListener((ActionEvent e) -> {
             this.reset();
+            this.sw.setGuessResult("#");
+            try {
+                //Generate a new word
+                this.setWord(this.sw.getGuess());
+            } catch (WordleException ex) {
+                Logger.getLogger(WordPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
     
@@ -92,6 +120,8 @@ public class WordPanel extends javax.swing.JPanel /*implements ActionListener*/{
             llb.get(i).setText(String.valueOf(word.charAt(i)));
         }
     }
+    
+    
     
     
 

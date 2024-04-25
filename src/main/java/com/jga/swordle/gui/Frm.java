@@ -36,9 +36,9 @@ public class Frm extends javax.swing.JFrame {
         */
         SWordle sw = new SWordle(5, 6, "Spanish");
         wordlePanel = new WordlePanel(sw);
-        //wordlePanel.setBounds(0, 0, 500, 600);
         this.add(wordlePanel);
         wordlePanel.setVisible(true);
+        this.setTitle("Swordle");
         this.setSize(600, 600);
         
 

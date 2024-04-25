@@ -34,6 +34,7 @@ public class WordlePanel extends javax.swing.JPanel {
     private SWordle sw;
     private int currentTurn;
 
+
     public SWordle getSWordle() {
         return sw;
     }
@@ -41,10 +42,20 @@ public class WordlePanel extends javax.swing.JPanel {
     public void setSWordle(SWordle sw) {
         this.sw = sw;
     }
+    
+    public int getCurrentTurn() {
+        return currentTurn;
+    }
+
+    public void setCurrentTurn(int currentTurn) {
+        this.currentTurn = currentTurn;
+    }
+
 
     public WordlePanel(SWordle sw) {
 
         initComponents();
+        this.sw = sw;
         int size = sw.getSize();
         int turns = sw.getTurns();
         currentTurn = 0;
@@ -53,7 +64,7 @@ public class WordlePanel extends javax.swing.JPanel {
         lwp = new ArrayList<>();
         for (int i=0; i<turns; i++)
         {
-            WordPanel wp = new WordPanel(sw);
+            WordPanel wp = new WordPanel(this);
             wp.setVisible(true);
             wp.setBounds(WIDTH_SEPARATOR, (i+1)*HEIGHT_SEPARATOR + i*(BOX_HEIGHT + HEIGHT_SEPARATOR) ,  (size+3) * (BOX_WIDTH + WIDTH_SEPARATOR) + WIDTH_SEPARATOR, BOX_HEIGHT + 2*HEIGHT_SEPARATOR);
             lwp.add(wp);
@@ -77,13 +88,7 @@ public class WordlePanel extends javax.swing.JPanel {
         btnStart.addActionListener((ActionEvent e) -> {
           if ("Start".equals(btnStart.getText())){
             btnStart.setText("Reset"); 
-              try {
-                  lwp.get(0).setWord(sw.getGuess());
-              } catch (WordleException ex) {
-                  Logger.getLogger(WordlePanel.class.getName()).log(Level.SEVERE, null, ex);
-              }
-            lwp.get(0).setEnabled(true);
-
+            this.newTurn();
           }
           else
           {
@@ -92,10 +97,27 @@ public class WordlePanel extends javax.swing.JPanel {
                 wp.reset();
                 wp.setEnabled(false);
                 sw.reset();
+                this.currentTurn = 0;
                         
             }
           }
         });
+        
+    }
+    
+    public void newTurn()
+    {
+        
+        try {
+            lwp.get(this.currentTurn).setWord(sw.getGuess());
+        } catch (WordleException ex) {
+            Logger.getLogger(WordlePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        lwp.get(this.currentTurn).setEnabled(true);    
+        if (this.currentTurn > 0){
+            lwp.get(this.currentTurn -1).setEnabled(false);   
+        }
+        this.currentTurn++;
         
     }
     
