@@ -4,6 +4,7 @@
  */
 package com.jga.swordle.gui;
 
+import com.jga.swordle.core.SWordle;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Insets;
@@ -29,11 +30,16 @@ public class WordPanel extends javax.swing.JPanel /*implements ActionListener*/{
     private List<LetterBox> llb;
     private JButton btnCheck;
     private JButton btnNotFound;
+    private SWordle sw;
+    private String word;
+    
     /**
      * Creates new form WordPanel
      */
-    public WordPanel(int size) {
+    public WordPanel(SWordle sw) {
         initComponents();
+        this.sw = sw;
+        int size = sw.getSize();
         //this.setBorder(BorderFactory.createLineBorder(Color.black));
         llb = new ArrayList<LetterBox>();
         for (int i=0; i<size; i++)
@@ -80,11 +86,14 @@ public class WordPanel extends javax.swing.JPanel /*implements ActionListener*/{
     }
     
     public void setWord(String word){
+        this.word = word;
         for (int i=0; i<llb.size(); i++)
         {
             llb.get(i).setText(String.valueOf(word.charAt(i)));
         }
     }
+    
+    
 
 
     

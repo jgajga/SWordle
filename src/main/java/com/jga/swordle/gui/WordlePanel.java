@@ -53,7 +53,7 @@ public class WordlePanel extends javax.swing.JPanel {
         lwp = new ArrayList<>();
         for (int i=0; i<turns; i++)
         {
-            WordPanel wp = new WordPanel(size);
+            WordPanel wp = new WordPanel(sw);
             wp.setVisible(true);
             wp.setBounds(WIDTH_SEPARATOR, (i+1)*HEIGHT_SEPARATOR + i*(BOX_HEIGHT + HEIGHT_SEPARATOR) ,  (size+3) * (BOX_WIDTH + WIDTH_SEPARATOR) + WIDTH_SEPARATOR, BOX_HEIGHT + 2*HEIGHT_SEPARATOR);
             lwp.add(wp);
@@ -89,6 +89,7 @@ public class WordlePanel extends javax.swing.JPanel {
           {
             btnStart.setText("Start"); 
             for (WordPanel wp : lwp){
+                wp.reset();
                 wp.setEnabled(false);
                 sw.reset();
                         
