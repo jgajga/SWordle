@@ -5,6 +5,7 @@
 package com.jga.swordle.gui;
 
 import com.jga.swordle.core.SWordle;
+import com.jga.swordle.core.WordleException;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Insets;
@@ -12,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
@@ -29,6 +32,7 @@ public class WordlePanel extends javax.swing.JPanel {
     private List<WordPanel> lwp;
     private JButton btnStart;
     private SWordle sw;
+    private int currentTurn;
 
     public SWordle getSWordle() {
         return sw;
@@ -43,6 +47,7 @@ public class WordlePanel extends javax.swing.JPanel {
         initComponents();
         int size = sw.getSize();
         int turns = sw.getTurns();
+        currentTurn = 0;
         //this.setBorder(BorderFactory.createLineBorder(Color.black));
         this.setBounds(10, 10, 500, 600);
         lwp = new ArrayList<>();
@@ -72,7 +77,13 @@ public class WordlePanel extends javax.swing.JPanel {
         btnStart.addActionListener((ActionEvent e) -> {
           if ("Start".equals(btnStart.getText())){
             btnStart.setText("Reset"); 
+              try {
+                  lwp.get(0).setWord(sw.getGuess());
+              } catch (WordleException ex) {
+                  Logger.getLogger(WordlePanel.class.getName()).log(Level.SEVERE, null, ex);
+              }
             lwp.get(0).setEnabled(true);
+
           }
           else
           {
