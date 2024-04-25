@@ -68,17 +68,22 @@ public class WordPanel extends javax.swing.JPanel /*implements ActionListener*/{
         });
         
         btnNotFound.addActionListener((ActionEvent e) -> {
-            System.exit(0);
+            this.reset();
         });
     }
     
-
+    public void reset(){
+        for (LetterBox lb : llb){
+            lb.setText("");
+            lb.setBackground(Color.WHITE);
+        }    
+    }
 
 
     
     @Override
     public void setEnabled(boolean isEnabled){
-        for (JButton lb : llb){
+        for (LetterBox lb : llb){
             lb.setEnabled(isEnabled);
         }
         super.setEnabled(isEnabled);
