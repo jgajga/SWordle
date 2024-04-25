@@ -78,6 +78,13 @@ public class WordPanel extends javax.swing.JPanel /*implements ActionListener*/{
             lb.setBackground(Color.WHITE);
         }    
     }
+    
+    public void setWord(String word){
+        for (int i=0; i<llb.size(); i++)
+        {
+            llb.get(i).setText(String.valueOf(word.charAt(i)));
+        }
+    }
 
 
     
