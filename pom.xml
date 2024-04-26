@@ -46,6 +46,18 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>2.7</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.17.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.13.3</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>   
 
 <build>
@@ -62,7 +74,7 @@
             <classpathPrefix>lib/</classpathPrefix>
             <mainClass>com.jga.swordle.core.Main</mainClass>
           </manifest>
-        </archive>
+            </archive>
       </configuration>
     </plugin>
 

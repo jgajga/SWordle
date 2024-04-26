@@ -10,6 +10,12 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.jga.swordle.gui.Frm;
+import com.jga.swordle.gui.Setup;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.logging.Level;
 
 /**
  *
@@ -18,7 +24,7 @@ import com.jga.swordle.gui.Frm;
 public class Main {
     private static Logger logger = LoggerFactory.getLogger(Main.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         /*
         SWordle sw = new SWordle(5, "Spanish");
         String resp = "";
@@ -35,8 +41,33 @@ public class Main {
         }
         sw.reset();
 */
+/*
         Frm frm = new Frm(); 
         frm.setVisible(true);
         frm.setSize(600, 600);
-    }     
+ */       
+  
+
+        Setup setup = new Setup(); 
+        setup.setVisible(true);
+        setup.setSize(300, 300);
+
+
+/*
+Properties prop = new Properties();
+String fileName = "app.config";
+ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+InputStream is = classloader.getResourceAsStream("app.config");
+        try {
+            prop.load(is);
+            System.out.println(prop.getProperty("app.name"));
+            System.out.println(prop.getProperty("app.version"));
+            
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}
+*/
+    }
+
 }

@@ -22,9 +22,7 @@ public class LetterBox extends JButton implements ActionListener{
          this.setBackground(Color.WHITE);
          addActionListener(this);
          setMargin(new Insets(0, 0, 0, 0));
-         //this.setText("윤");
-         this.setFont(new Font("Dialog", Font.PLAIN, 40));
-         //this.setBorder(new RoundedBorder(10));
+         this.setFont(new Font("Dialog", Font.PLAIN, 30));
     }
 
     
