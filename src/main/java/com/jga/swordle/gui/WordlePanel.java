@@ -4,6 +4,7 @@
  */
 package com.jga.swordle.gui;
 
+import com.jga.swordle.core.Main;
 import com.jga.swordle.core.SWordle;
 import com.jga.swordle.core.WordleException;
 import java.awt.Color;
@@ -18,12 +19,15 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author 280148
  */
 public class WordlePanel extends javax.swing.JPanel {
+    
+    private static org.slf4j.Logger logger = LoggerFactory.getLogger(WordlePanel.class);
 
     private int BOX_WIDTH = 50;
     private int BOX_HEIGHT = 50;
@@ -93,14 +97,17 @@ public class WordlePanel extends javax.swing.JPanel {
           }
           else
           {
-            int n = JOptionPane.showConfirmDialog(this, "xxx");
-            btnStart.setText("Start"); 
-            for (WordPanel wp : lwp){
-                wp.reset();
-                wp.setEnabled(false);
-                sw.reset();
-                this.currentTurn = 0;
-                        
+            int answer = JOptionPane.showConfirmDialog(this, "Are sure you want to reset game?","Alert",JOptionPane.YES_NO_OPTION);
+            logger.info("respuesta: " + answer);
+            if (answer == 0){
+                btnStart.setText("Start"); 
+                for (WordPanel wp : lwp){
+                    wp.reset();
+                    wp.setEnabled(false);
+                    sw.reset();
+                    this.currentTurn = 0;
+
+                }
             }
           }
         });

@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 
 /**
@@ -74,10 +75,19 @@ public class WordPanel extends javax.swing.JPanel /*implements ActionListener*/{
         
         
         btnCheck.addActionListener((ActionEvent e) -> {
+            
             StringBuilder sb = new StringBuilder(); 
+            boolean isCompleted = true;
+            int greens = 0;
             for (LetterBox lb : llb){
+                if (lb.getBackground() == Color.WHITE)
+                {
+                    isCompleted = false;
+                    break;
+                }
                 if (lb.getBackground() == Color.GREEN)
                 {
+                    greens++;
                     sb.append("=");
                 }
                 else if (lb.getBackground() == Color.YELLOW)
@@ -89,20 +99,42 @@ public class WordPanel extends javax.swing.JPanel /*implements ActionListener*/{
                     sb.append("x");
                 }                
             }
-            sw.setGuessResult(sb.toString());
-            parent.newTurn();
+            
+            if (isCompleted){
+                sw.setGuessResult(sb.toString());
+                if (greens == this.sw.getSize()){
+                    JOptionPane.showMessageDialog(this, "Game won in " + parent.getCurrentTurn() + "turns", "Alert", JOptionPane.INFORMATION_MESSAGE);    
+                }
+                else{
+                    if (parent.getCurrentTurn() == this.sw.getTurns()){
+                        this.setEnabled(false);
+                        JOptionPane.showMessageDialog(this, "Solution not found. Game lost.", "Alert", JOptionPane.INFORMATION_MESSAGE);    
+                    }
+                    else{
+                        parent.newTurn();
+                    }    
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Color all pieces, please.", "Alert", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
             
         });
         
         btnNotFound.addActionListener((ActionEvent e) -> {
-            this.reset();
-            this.sw.setGuessResult("#");
-            try {
-                //Generate a new word
-                this.setWord(this.sw.getGuess());
-            } catch (WordleException ex) {
-                Logger.getLogger(WordPanel.class.getName()).log(Level.SEVERE, null, ex);
+            int answer = JOptionPane.showConfirmDialog(this, "Are sure you want to ask for another word?","Alert",JOptionPane.YES_NO_OPTION);
+            if (answer == 0){
+                this.reset();
+                this.sw.setGuessResult("#");
+                try {
+                    //Generate a new word
+                    this.setWord(this.sw.getGuess());
+                } catch (WordleException ex) {
+                    Logger.getLogger(WordPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+            
         });
     }
     
