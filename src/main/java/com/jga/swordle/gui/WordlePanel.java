@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -92,6 +93,7 @@ public class WordlePanel extends javax.swing.JPanel {
           }
           else
           {
+            int n = JOptionPane.showConfirmDialog(this, "xxx");
             btnStart.setText("Start"); 
             for (WordPanel wp : lwp){
                 wp.reset();
