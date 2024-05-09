@@ -316,12 +316,16 @@ public class SWordle {
             sb.append(i);           
         }  
         //Where conditions here
-        sb.append(" WHERE 1=1");
-        for (String s : this.conditions){
-            sb.append(" AND ");    
-            sb.append(s); 
+        if (!this.conditions.isEmpty()){
+            sb.append(" WHERE ");
+            for (String s : this.conditions){
+                sb.append(" AND ");    
+                sb.append(s); 
+            }            
         }
         logger.info("conditions: " + this.conditions);
+        
+        
         sb.append(" ORDER BY ");
         
         for (int i=1; i<this.size; i++){
