@@ -211,7 +211,7 @@ public abstract class SWordle {
     protected String strInsertWord(String word){
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO Words VALUES (\"");
-        sb.append(word);
+        sb.append(word.toUpperCase());
         sb.append("\", ");
         for (int i=1; i<this.size; i++){
             sb.append("\"");
