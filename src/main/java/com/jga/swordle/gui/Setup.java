@@ -9,6 +9,7 @@ import com.jga.swordle.core.SWordle;
 import com.jga.swordle.core.Tree;
 import com.jga.swordle.core.Trees;
 import com.jga.swordle.core.Utils;
+import com.jga.swordle.engines.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,7 +43,8 @@ public class Setup extends javax.swing.JFrame {
         
         //Engine List
         cbbEngine.removeAllItems();
-        cbbEngine.addItem("Default");
+        cbbEngine.addItem("Direct-Random");
+        cbbEngine.addItem("Direct-Stat");
         
 
         
@@ -155,7 +157,11 @@ public class Setup extends javax.swing.JFrame {
         String language= String.valueOf(cbbLanguage.getSelectedItem().toString());
         int size = Integer.valueOf(cbbWordSize.getSelectedItem().toString());
         int turns = Integer.valueOf(cbbTurns.getSelectedItem().toString());
-        this.sw = new SWordle(size, turns, language);
+        switch (cbbEngine.getSelectedItem().toString()){
+            case "Direct-Random" -> this.sw = new SWRandom(size, turns, language);
+            case "Direct-Stat" -> this.sw = new SWDirect(size, turns, language);    
+        }
+
         WordleWindow ww = new WordleWindow(this, true);
         ww.setVisible(true);
            

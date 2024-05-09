@@ -5,6 +5,7 @@
 package com.jga.swordle.gui;
 
 import com.jga.swordle.core.SWordle;
+import com.jga.swordle.engines.*;
 
 /**
  *
@@ -34,7 +35,7 @@ public class Frm extends javax.swing.JFrame {
         wpanel.setEnabled(false);
         wpanel.setEnabled(true);
         */
-        SWordle sw = new SWordle(5, 6, "Spanish");
+        SWordle sw = new SWRandom(5, 6, "Spanish");
         wordlePanel = new WordlePanel(sw);
         this.add(wordlePanel);
         wordlePanel.setVisible(true);

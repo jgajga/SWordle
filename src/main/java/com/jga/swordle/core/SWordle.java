@@ -13,18 +13,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class SWordle {
+public abstract class SWordle {
     
-    private final String  BASE = "https://raw.githubusercontent.com/eymenefealtun/all-words-in-all-languages/main";
-    private static final Logger logger = LoggerFactory.getLogger(SWordle.class);
-    private int size;
-    private int turns;
-    private String language;
-    private SQLiteDB db;
-    private final List<String> words;
+    protected final String  BASE = "https://raw.githubusercontent.com/eymenefealtun/all-words-in-all-languages/main";
+    protected static final Logger logger = LoggerFactory.getLogger(SWordle.class);
+    protected int size;
+    protected int turns;
+    protected String language;
+    protected SQLiteDB db;
+    protected final List<String> words;
     
-    private String selectedWord;
-    private List<String> conditions;
+    protected String selectedWord;
+    protected List<String> conditions;
     
     public int getSize() {
         return size;
@@ -62,14 +62,14 @@ public class SWordle {
         
     }
     
-    private void createDB(){
+    protected void createDB(){
 
         logger.info(strCreateTableWords());
         db.executeUpdate(strCreateTableWords());
         
     }
     
-    private void loadDB(){
+    protected void loadDB(){
         logger.info("loadDB");
         for (String w: words){
             db.executeUpdate(strInsertWord(w));
@@ -90,58 +90,17 @@ public class SWordle {
         }
     }
     
-    public String getGuess() throws WordleException{
-        ResultSet rs = db.executeQuery(this.strEvaluationQuery());
-        String word = "";
-        try {
-            if (rs.next()) {
-                word = rs.getString(1);
-            }
-            else
-            {
-                throw new WordleException("EVALUATION_ERROR", "The evaluation function did not suggest any words");
-            }
-        rs.close();
-        logger.info("SelectedWord: " + word);
-        } catch(SQLException e){
-        }
-        this.selectedWord = word;
-        return word;
-        
-    }
+    public abstract String getGuess() throws WordleException;
     
     // X: Letter is not in the word
     // O: Letter in correct position
     // ?: Letter in word but at wrong position
     // #: Incorrect word (not found in dictionary)
-    public void setGuessResult(String s){
-        if (s.equals("#"))
-        {
-            conditions.add(strNotInDictionary(this.selectedWord));
-        }
-        else
-        {
-            for (int i=1; i<=this.size; i++)
-            {
-                switch(s.substring(i-1, i)){
-                    case "=" -> conditions.add(strCorrectPositionCondition(i,this.selectedWord));
-                    case "?" -> conditions.add(strIncorrectPositionCondition(i,this.selectedWord));
-                    default -> {
-                        List<String> l = lettersInGreenOrYellow(this.selectedWord, s);
-                        conditions.add(strNotFoundCondition(i, this.selectedWord, l));
-                    }
-                }
-            }
-        }
-        
-    }
+    public abstract void setGuessResult(String s);
     
-    public void reset(){
-        selectedWord = "";
-        conditions  = new ArrayList<String>();
-    }
+    public abstract void reset();
     
-    private String strNotInDictionary(String word){
+    protected String strNotInDictionary(String word){
         StringBuilder sb = new StringBuilder();    
         sb.append("W.Word <> \"");
         sb.append(word);
@@ -149,7 +108,7 @@ public class SWordle {
         return sb.toString();
     }
     
-    private String strCorrectPositionCondition(int index, String word){
+    protected String strCorrectPositionCondition(int index, String word){
         StringBuilder sb = new StringBuilder();    
         sb.append("W.Letter");
         sb.append(index);
@@ -159,7 +118,7 @@ public class SWordle {
         return sb.toString();
     }
     
-    private String strIncorrectPositionCondition(int index, String word){
+    protected String strIncorrectPositionCondition(int index, String word){
         StringBuilder sb = new StringBuilder();    
         sb.append("W.Letter");
         sb.append(index);
@@ -189,7 +148,7 @@ public class SWordle {
     }
         
         
-    private List<String> lettersInGreenOrYellow(String selected, String answer){
+    protected List<String> lettersInGreenOrYellow(String selected, String answer){
         List<String> lettersIn = new ArrayList<>();
         for (int i=0; i<this.size; i++){
             if (String.valueOf(answer.charAt(i)).equals("=") || String.valueOf(answer.charAt(i)).equals("?")){
@@ -200,7 +159,7 @@ public class SWordle {
     }
 
     //
-    private String strNotFoundCondition(int index, String word, List<String> lettersInGreenOrYellow){
+    protected String strNotFoundCondition(int index, String word, List<String> lettersInGreenOrYellow){
         StringBuilder sb = new StringBuilder();    
 
         if (lettersInGreenOrYellow.contains(word.substring(index-1, index))){
@@ -234,7 +193,7 @@ public class SWordle {
 
 
     
-    private String strCreateTableWords(){
+    protected String strCreateTableWords(){
         StringBuilder sb = new StringBuilder();
         sb.append("CREATE TABLE Words ( Word TEXT(100), ");
         
@@ -249,7 +208,7 @@ public class SWordle {
         return sb.toString();
     }
     
-    private String strInsertWord(String word){
+    protected String strInsertWord(String word){
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO Words VALUES (\"");
         sb.append(word);
@@ -266,7 +225,7 @@ public class SWordle {
         return sb.toString();
     }
     
-    private String strURL(){
+    protected String strURL(){
         StringBuilder sb = new StringBuilder();
         sb.append(this.BASE);
         sb.append("/");
@@ -277,7 +236,7 @@ public class SWordle {
         return sb.toString();
     }
     
-    private String strEvaluationQuery()
+    protected String strEvaluationQuery()
     {
         StringBuilder sb = new StringBuilder(); 
         sb.append("SELECT Word, ");

@@ -4,6 +4,7 @@
  */
 package com.jga.swordle.core;
 
+import com.jga.swordle.engines.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -25,8 +26,9 @@ public class Main {
     private static Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args)  {
+        
         /*
-        SWordle sw = new SWordle(5, "Spanish");
+        SWordle sw = new SWRandom(5, 6, "Spanish");
         String resp = "";
         while (!resp.equals("====="))
         {
@@ -40,7 +42,8 @@ public class Main {
             sw.setGuessResult(resp);
         }
         sw.reset();
-*/
+        */
+
 /*
         Frm frm = new Frm(); 
         frm.setVisible(true);
