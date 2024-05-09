@@ -58,7 +58,8 @@ public class WordPanel extends javax.swing.JPanel /*implements ActionListener*/{
         //OK - Button
         btnCheck = new JButton();
         btnCheck.setMargin(new Insets(0, 0, 0, 0));
-        btnCheck.setText("O");
+        btnCheck.setText("\u2714");
+        btnCheck.setForeground(Color.GREEN);
         btnCheck.setFont(new Font("Dialog", Font.PLAIN, 40));
         btnCheck.setBounds(WIDTH_SEPARATOR + (size+1)*(BOX_WIDTH + WIDTH_SEPARATOR), HEIGHT_SEPARATOR, BOX_WIDTH, BOX_HEIGHT);
         this.add(btnCheck);
@@ -67,7 +68,8 @@ public class WordPanel extends javax.swing.JPanel /*implements ActionListener*/{
         //NotFound - Button
         btnNotFound = new JButton();
         btnNotFound.setMargin(new Insets(0, 0, 0, 0));
-        btnNotFound.setText("X");
+        btnNotFound.setText("\u274C");
+        btnNotFound.setForeground(Color.RED);
         btnNotFound.setFont(new Font("Dialog", Font.PLAIN, 40));
         btnNotFound.setBounds(WIDTH_SEPARATOR + (size+2)*(BOX_WIDTH + WIDTH_SEPARATOR), HEIGHT_SEPARATOR, BOX_WIDTH, BOX_HEIGHT);
         this.add(btnNotFound);
