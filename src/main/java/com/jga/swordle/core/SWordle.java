@@ -215,11 +215,11 @@ public abstract class SWordle {
         sb.append("\", ");
         for (int i=1; i<this.size; i++){
             sb.append("\"");
-            sb.append(String.valueOf(word.charAt(i-1)));
+            sb.append(String.valueOf(word.charAt(i-1)).toUpperCase());
             sb.append("\", ");
         }
         sb.append("\"");
-        sb.append(String.valueOf(word.charAt(this.size-1)));
+        sb.append(String.valueOf(word.charAt(this.size-1)).toUpperCase());
         sb.append("\")");       
         
         return sb.toString();
