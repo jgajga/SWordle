@@ -17,6 +17,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Level;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -27,11 +29,24 @@ public class Main {
 
     public static void main(String[] args)  {
         
-        /*
-        SWordle sw = new SWRandom(5, 6, "Spanish");
-        String resp = "";
-        while (!resp.equals("====="))
-        {
+        try {
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+  
+            /*
+            SWordle sw = new SWRandom(5, 6, "Spanish");
+            String resp = "";
+            while (!resp.equals("====="))
+            {
             try{
             logger.info("Evaluate: " + sw.getGuess());
             }
@@ -40,17 +55,15 @@ public class Main {
             System.out.println("Resp:");
             resp = s.next();
             sw.setGuessResult(resp);
-        }
-        sw.reset();
+            }
+            sw.reset();
+            */
+            
+            /*
+            Frm frm = new Frm();
+            frm.setVisible(true);
+            frm.setSize(600, 600);
         */
-
-/*
-        Frm frm = new Frm(); 
-        frm.setVisible(true);
-        frm.setSize(600, 600);
- */       
-  
-
         Setup setup = new Setup(); 
         setup.setVisible(true);
         setup.setSize(300, 300);
