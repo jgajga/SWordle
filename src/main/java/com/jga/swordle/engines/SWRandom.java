@@ -38,6 +38,7 @@ public class SWRandom extends SWordle{
         logger.info("SelectedWord: " + word);
         } catch(SQLException e){
         }
+        
         this.selectedWord = word;
         return word;
         

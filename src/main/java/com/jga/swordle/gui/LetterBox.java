@@ -41,7 +41,8 @@ public class LetterBox extends JButton implements ActionListener{
         setMargin(new Insets(0, 0, 0, 0));
         label.setFont(new Font("Dialog", Font.PLAIN, 30));
         label.setHorizontalAlignment(SwingConstants.CENTER);
-        this.setBackground(Color.WHITE);
+        label.setBackground(Color.WHITE);
+        bg = Color.WHITE;
     }
 
     
@@ -74,7 +75,7 @@ public class LetterBox extends JButton implements ActionListener{
     
     @Override
     public void setText(String text) {
-        super.setText(text);
+        //super.setText(text);
         if(label != null){
             label.setText(text);
         }
@@ -82,7 +83,7 @@ public class LetterBox extends JButton implements ActionListener{
 
     @Override
     public void setForeground(Color fg) {
-        super.setForeground(fg);
+        //super.setForeground(fg);
         if(label != null){
             label.setForeground(fg);
         }
@@ -105,15 +106,22 @@ public class LetterBox extends JButton implements ActionListener{
     
     @Override
     public void setEnabled(boolean b){
-        super.setEnabled(b);
+        //super.setEnabled(b);
         if (b){
             this.setBackground(currentBg);  
         }
         else{
             currentBg = this.getBackground();
-            this.setBackground(new Color(224, 224, 224));
+            if (currentBg == Color.WHITE){
+                this.setBackground(new Color(224, 224, 224));
+            }
+            else
+            {
+                this.setBackground(new Color(currentBg.getRed(), currentBg.getGreen(), currentBg.getBlue(), 40));
+            }
         }
         
     }
+
     
 }
