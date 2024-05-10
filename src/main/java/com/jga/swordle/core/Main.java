@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.jga.swordle.gui.Frm;
 import com.jga.swordle.gui.Setup;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -65,8 +67,10 @@ public class Main {
             frm.setSize(600, 600);
         */
         Setup setup = new Setup(); 
-        setup.setVisible(true);
         setup.setSize(300, 300);
+        setup.setLocationRelativeTo(null);
+        setup.setVisible(true);
+
 
 
 /*
