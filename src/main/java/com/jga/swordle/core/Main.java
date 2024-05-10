@@ -13,12 +13,15 @@ import org.slf4j.LoggerFactory;
 import com.jga.swordle.gui.Frm;
 import com.jga.swordle.gui.Setup;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Level;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -69,6 +72,18 @@ public class Main {
         Setup setup = new Setup(); 
         setup.setSize(300, 300);
         setup.setLocationRelativeTo(null);
+        
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        InputStream stream = classloader.getResourceAsStream("images/wordle_icon.png");
+        ImageIcon icon;
+        try {
+            icon = new ImageIcon(ImageIO.read(stream));
+            setup.setIconImage(icon.getImage());
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
         setup.setVisible(true);
 
 
