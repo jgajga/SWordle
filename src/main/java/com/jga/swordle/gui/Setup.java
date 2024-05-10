@@ -163,6 +163,7 @@ public class Setup extends javax.swing.JFrame {
         }
 
         WordleWindow ww = new WordleWindow(this, true);
+        ww.setLocationRelativeTo(null);
         ww.setVisible(true);
            
         
