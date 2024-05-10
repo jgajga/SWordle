@@ -26,6 +26,7 @@ public class LetterBox extends JButton implements ActionListener{
 
     JLabel label = new JLabel();
     private Color bg;
+    private Color currentBg;
     
     
     public LetterBox() {
@@ -100,6 +101,19 @@ public class LetterBox extends JButton implements ActionListener{
         Graphics2D g2d = (Graphics2D)g;
         g2d.setColor(bg);
         g2d.fill(rectangle);
-    }    
+    }   
+    
+    @Override
+    public void setEnabled(boolean b){
+        super.setEnabled(b);
+        if (b){
+            this.setBackground(currentBg);  
+        }
+        else{
+            currentBg = this.getBackground();
+            this.setBackground(new Color(224, 224, 224));
+        }
+        
+    }
     
 }
