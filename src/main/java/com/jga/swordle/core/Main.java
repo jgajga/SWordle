@@ -74,7 +74,7 @@ public class Main {
         setup.setLocationRelativeTo(null);
         
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classloader.getResourceAsStream("images/wordle_icon.png");
+        InputStream stream = classloader.getResourceAsStream("images/wordle_icon.jpg");
         ImageIcon icon;
         try {
             icon = new ImageIcon(ImageIO.read(stream));
