@@ -46,13 +46,13 @@ public abstract class SWordle {
         this.createDB();
 
         String content;
-        logger.info(strURL());
+        //logger.info(strURL());
         try{
             content = Utils.readURL(strURL());
         }catch (IOException e) {
             content = "Error";
         }        
-        logger.info(content);
+        //logger.info(content);
         
         this.words = Utils.filterValidWords(Utils.splitByComma(content),this.size);
         
@@ -64,17 +64,17 @@ public abstract class SWordle {
     
     protected void createDB(){
 
-        logger.info(strCreateTableWords());
+        //logger.info(strCreateTableWords());
         db.executeUpdate(strCreateTableWords());
         
     }
     
     protected void loadDB(){
-        logger.info("loadDB");
+        //logger.info("loadDB");
         for (String w: words){
             db.executeUpdate(strInsertWord(w));
             //logger.info("loading: " + w + "(" + strInsertWord(w) +")");
-            System.out.println(strInsertWord(w) + ";");
+            //System.out.println(strInsertWord(w) + ";");
         }    
         
         
@@ -85,7 +85,7 @@ public abstract class SWordle {
             count = rs.getInt(1);
         }
         rs.close();
-        logger.info("Loaded rows: " + count);
+        //logger.info("Loaded rows: " + count);
         } catch(SQLException e){
         }
     }
@@ -282,7 +282,7 @@ public abstract class SWordle {
                 sb.append(s); 
             }            
         }
-        logger.info("conditions: " + this.conditions);
+        //logger.info("conditions: " + this.conditions);
         
         
         sb.append(" ORDER BY ");
@@ -296,7 +296,7 @@ public abstract class SWordle {
         sb.append(this.size);
         sb.append(" DESC");
         
-        logger.info("strEvaluationQuery():" + sb.toString());
+        //logger.info("strEvaluationQuery():" + sb.toString());
         return sb.toString();
         
     }

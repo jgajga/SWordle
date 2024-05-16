@@ -35,7 +35,7 @@ public class SWDirect extends SWordle{
                 throw new WordleException("EVALUATION_ERROR", "The evaluation function did not suggest any words");
             }
         rs.close();
-        logger.info("SelectedWord: " + word);
+        //logger.info("SelectedWord: " + word);
         } catch(SQLException e){
         }
         this.selectedWord = word;
@@ -125,7 +125,7 @@ public class SWDirect extends SWordle{
                 sb.append(s); 
             }            
         }
-        logger.info("conditions: " + this.conditions);
+        //logger.info("conditions: " + this.conditions);
         
         
         sb.append(" ORDER BY ");
@@ -139,7 +139,7 @@ public class SWDirect extends SWordle{
         sb.append(this.size);
         sb.append(" DESC");
         
-        logger.info("strEvaluationQuery():" + sb.toString());
+        //logger.info("strEvaluationQuery():" + sb.toString());
         return sb.toString();
         
     }

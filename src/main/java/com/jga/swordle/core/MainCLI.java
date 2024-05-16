@@ -70,7 +70,8 @@ public class MainCLI {
             break;
         }
         if (hints == 6){
-            System.out.println("Game over. Solution not found");    
+            System.out.println("Game over. Solution not found");   
+            break;
         }
     }
     
