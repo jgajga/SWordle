@@ -70,6 +70,7 @@ public class Main {
             frm.setSize(600, 600);
         */
         Setup setup = new Setup(); 
+        setup.setTitle("Wordle Solver");
         setup.setSize(300, 300);
         setup.setLocationRelativeTo(null);
         

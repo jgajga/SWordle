@@ -92,7 +92,7 @@ public class LetterBox extends JButton implements ActionListener{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
+        
         Rectangle rectangle = getBounds();
         rectangle.x = 0;
         rectangle.y = 0;
@@ -102,6 +102,7 @@ public class LetterBox extends JButton implements ActionListener{
         Graphics2D g2d = (Graphics2D)g;
         g2d.setColor(bg);
         g2d.fill(rectangle);
+
     }   
     
     @Override

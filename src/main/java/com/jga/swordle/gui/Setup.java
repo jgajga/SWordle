@@ -5,14 +5,18 @@
 package com.jga.swordle.gui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jga.swordle.core.Main;
 import com.jga.swordle.core.SWordle;
 import com.jga.swordle.core.Tree;
 import com.jga.swordle.core.Trees;
 import com.jga.swordle.core.Utils;
 import com.jga.swordle.engines.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 
 public class Setup extends javax.swing.JFrame {
@@ -163,6 +167,16 @@ public class Setup extends javax.swing.JFrame {
         }
 
         WordleWindow ww = new WordleWindow(this, true);
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        InputStream stream = classloader.getResourceAsStream("images/wordle_icon.jpg");
+        ImageIcon icon;
+        try {
+            icon = new ImageIcon(ImageIO.read(stream));
+            ww.setIconImage(icon.getImage());
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ww.setTitle("Wordle Solver " + sw.getLanguage() + " (" + sw.getSize() + ", " + sw.getTurns() + ") - Engine: " + cbbEngine.getSelectedItem().toString());
         ww.setLocationRelativeTo(null);
         ww.setVisible(true);
            
