@@ -90,19 +90,7 @@ public class Main {
 
 
 /*
-Properties prop = new Properties();
-String fileName = "app.config";
-ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-InputStream is = classloader.getResourceAsStream("app.config");
-        try {
-            prop.load(is);
-            System.out.println(prop.getProperty("app.name"));
-            System.out.println(prop.getProperty("app.version"));
-            
-        } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-}
+
 */
     }
 

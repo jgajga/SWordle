@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 public abstract class SWordle {
     
-    protected final String  BASE = "https://raw.githubusercontent.com/eymenefealtun/all-words-in-all-languages/main";
+    protected final String  BASE = Utils.getProperty("words.source");
     protected static final Logger logger = LoggerFactory.getLogger(SWordle.class);
     protected int size;
     protected int turns;

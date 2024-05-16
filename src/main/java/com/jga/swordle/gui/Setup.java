@@ -30,15 +30,19 @@ public class Setup extends javax.swing.JFrame {
         initComponents();
         
         //Load Language
+        
+      
         try {
-            String jsonString = Utils.readURL("https://api.github.com/repos/eymenefealtun/all-words-in-all-languages/git/trees/main");
+            String jsonString = Utils.readURL(Utils.getProperty("words.list"));
             Trees languages = new ObjectMapper().readValue(jsonString, Trees.class);
             cbbLanguage.removeAllItems();
             for (Tree t : languages.trees){
-                cbbLanguage.addItem(t.path);
+                if (t.type.equals("tree")){
+                    cbbLanguage.addItem(t.path);
+                }
             }
             cbbLanguage.removeItemAt(cbbLanguage.getItemCount() - 1);
-            cbbLanguage.removeItemAt(cbbLanguage.getItemCount() - 1);
+            //cbbLanguage.removeItemAt(cbbLanguage.getItemCount() - 1);
             cbbLanguage.setSelectedItem("Spanish");
             
         } catch (IOException ex) {

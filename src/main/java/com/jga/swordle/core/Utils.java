@@ -3,11 +3,14 @@ package com.jga.swordle.core;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
 
 public class Utils {
     // Método estático para leer el texto desde una URL
@@ -47,6 +50,22 @@ public class Utils {
         }
         return result;
             
+    }
+    
+    public static String getProperty(String name)
+    {
+        Properties prop = new Properties();
+        String value = "";
+        String fileName = "app.config";
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        InputStream is = classloader.getResourceAsStream("app.config");
+                try {
+                    prop.load(is);
+                    value = prop.getProperty(name);
+                } catch (IOException ex) {
+                    java.util.logging.Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        return value;
     }
 }
 
