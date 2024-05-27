@@ -105,7 +105,7 @@ public class WordPanel extends javax.swing.JPanel /*implements ActionListener*/{
             if (isCompleted){
                 sw.setGuessResult(sb.toString());
                 if (greens == this.sw.getSize()){
-                    JOptionPane.showMessageDialog(this, "Game won in " + parent.getCurrentTurn() + "turns", "Alert", JOptionPane.INFORMATION_MESSAGE);    
+                    JOptionPane.showMessageDialog(this, "Game won in " + parent.getCurrentTurn() + " turns", "Alert", JOptionPane.INFORMATION_MESSAGE);    
                 }
                 else{
                     if (parent.getCurrentTurn() == this.sw.getTurns()){
