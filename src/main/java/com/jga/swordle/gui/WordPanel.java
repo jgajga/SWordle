@@ -120,6 +120,7 @@ public class WordPanel extends javax.swing.JPanel /*implements ActionListener*/{
             else{
                 JOptionPane.showMessageDialog(this, "Color all pieces, please.", "Alert", JOptionPane.INFORMATION_MESSAGE);
             }
+            repaint();
             
             
         });
@@ -136,6 +137,7 @@ public class WordPanel extends javax.swing.JPanel /*implements ActionListener*/{
                     Logger.getLogger(WordPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            repaint();
             
         });
     }

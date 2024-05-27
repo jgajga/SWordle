@@ -110,6 +110,7 @@ public class WordlePanel extends javax.swing.JPanel {
                 }
             }
           }
+          repaint();
         });
         
     }
