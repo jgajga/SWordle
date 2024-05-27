@@ -65,13 +65,13 @@ public class WordlePanel extends javax.swing.JPanel {
         int turns = sw.getTurns();
         currentTurn = 0;
         //this.setBorder(BorderFactory.createLineBorder(Color.black));
-        this.setBounds(10, 10, 500, 600);
+        this.setBounds(0, 0, (size+3) * (BOX_WIDTH + WIDTH_SEPARATOR) + WIDTH_SEPARATOR, (turns+1)*HEIGHT_SEPARATOR + (turns)*(BOX_HEIGHT) + 50);
         lwp = new ArrayList<>();
         for (int i=0; i<turns; i++)
         {
             WordPanel wp = new WordPanel(this);
             wp.setVisible(true);
-            wp.setBounds(WIDTH_SEPARATOR, (i+1)*HEIGHT_SEPARATOR + i*(BOX_HEIGHT + HEIGHT_SEPARATOR) ,  (size+3) * (BOX_WIDTH + WIDTH_SEPARATOR) + WIDTH_SEPARATOR, BOX_HEIGHT + 2*HEIGHT_SEPARATOR);
+            wp.setBounds(WIDTH_SEPARATOR, (i+1)*HEIGHT_SEPARATOR + i*(BOX_HEIGHT) ,  (size+3) * (BOX_WIDTH + WIDTH_SEPARATOR) + WIDTH_SEPARATOR, BOX_HEIGHT + 2*HEIGHT_SEPARATOR);
             lwp.add(wp);
             this.add(wp);
         }        
@@ -80,7 +80,7 @@ public class WordlePanel extends javax.swing.JPanel {
         //btnStart.setMargin(new Insets(0, 0, 0, 0));
         btnStart.setFont(new Font("Dialog", Font.PLAIN, 20));
         btnStart.setText("Start");
-        btnStart.setBounds(WIDTH_SEPARATOR, (turns+1)*HEIGHT_SEPARATOR + (turns)*(BOX_HEIGHT + HEIGHT_SEPARATOR), 100, 40);
+        btnStart.setBounds(2* WIDTH_SEPARATOR, (turns+1)*HEIGHT_SEPARATOR + (turns)*(BOX_HEIGHT) + 10, 100, 40);
         btnStart.setVisible(true);
         this.add(btnStart);
         

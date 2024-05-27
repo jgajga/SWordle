@@ -25,7 +25,8 @@ public class WordleWindow extends javax.swing.JDialog {
         this.add(wordlePanel);
         wordlePanel.setVisible(true);
         this.setTitle("Swordle");
-        this.setSize(600, 600);
+        this.setSize(wordlePanel.getWidth() + 50, wordlePanel.getHeight() + 50);
+        
     }
     
     //Not used left to be compatible with Form Editor
